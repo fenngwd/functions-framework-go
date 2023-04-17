@@ -70,6 +70,7 @@ func NewFramework() (*functionsFrameworkImpl, error) {
 }
 
 func (fwk *functionsFrameworkImpl) Register(ctx context.Context, fn interface{}) error {
+	klog.Warningf("Show function context: %v", fwk.funcContext)
 	if fnHTTP, ok := fn.(func(http.ResponseWriter, *http.Request)); ok {
 		rf, err := functions.New(functions.WithFunctionName(fwk.funcContext.GetName()), functions.WithHTTP(fnHTTP), functions.WithFunctionPath(fwk.funcContext.GetHttpPattern()))
 		if err != nil {
